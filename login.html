@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Maestrion — Login</title>
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!--CSS-->
+<!--CSS-->
+<link rel="stylesheet" href="styles/globais.css">
+<link rel="stylesheet" href="styles/variables.css">
+<link rel="stylesheet" href="styles/animations.css">
+<link rel="stylesheet" href="styles/especifica/login.css">
+
+
+</head>
+<body>
+
+<div class="login-wrapper">
+
+<!-- LEFT -->
+<a href="home.html" class="back-home">
+    ← Voltar para Home
+</a>
+<div class="left-side">
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<div class="logo">
+
+</div>
+
+<div class="badge">
+PLATAFORMA MUSICAL & COMUNIDADE
+</div>
+
+<h1>
+Conecte talentos.
+Transforme
+<span>vidas.</span>
+</h1>
+
+<p>
+Acesse sua conta para aprender, criar, colaborar e impactar o mundo através da música e do propósito.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<h3>+12K</h3>
+<span>Membros ativos</span>
+</div>
+
+<div class="stat">
+<h3>+98K</h3>
+<span>Vidas impactadas</span>
+</div>
+
+<div class="stat">
+<h3>+42</h3>
+<span>Países</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="right-side">
+
+<div class="login-card">
+
+<h2>Entrar</h2>
+
+<p>
+Entre na sua conta e continue sua jornada.
+</p>
+
+<div class="social-login">
+
+<button class="social-btn">
+<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+Google
+</button>
+
+<button class="social-btn">
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="">
+Microsoft
+</button>
+
+</div>
+
+<div class="divider">
+ou continue com e-mail
+</div>
+
+<form id="registerForm">
+
+<div class="form-group">
+<label>E-mail</label>
+<input type="email" class="input" placeholder="seuemail@gmail.com">
+</div>
+
+<div class="form-group">
+<label>Senha</label>
+<input type="password" class="input" placeholder="••••••••">
+</div>
+
+<div class="options">
+
+<label class="checkbox">
+<input type="checkbox" id="rememberMe">
+<span class="checkmark"></span>
+Lembrar de mim
+</label>
+
+<a href="#">Esqueceu a senha?</a>
+
+</div>
+
+<button class="login-btn">
+Entrar na plataforma →
+</button>
+
+</form>
+
+<div class="bottom-text">
+Não possui conta?
+<a href="#">Criar conta</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+    const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // impede o recarregamento padrão
+
+    // Aqui você pode validar os dados antes, se quiser
+
+    window.location.href = "src/pages/configInicial.html.html";
+});
+
+const rememberMe = document.getElementById("rememberMe");
+
+if(localStorage.getItem("rememberMe") === "true"){
+    rememberMe.checked = true;
+}
+
+rememberMe.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "rememberMe",
+        rememberMe.checked
+    );
+
+});
+/* glow mouse effect */
+
+const card = document.querySelector('.login-card');
+
+card.addEventListener('mousemove',(e)=>{
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.background = `
+    radial-gradient(circle at ${x}px ${y}px,
+    rgba(139,92,255,.12),
+    rgba(10,14,30,.96) 45%)
+    `;
+
+});
+
+card.addEventListener('mouseleave',()=>{
+
+    card.style.background = 'rgba(10,14,30,.92)';
+
+});
+
+</script>
+
+</body>
+</html>

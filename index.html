@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Maestrion</title>
+
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<!--FONTS-->
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!--CSS-->
+<link rel="stylesheet" href="styles/especifica/intro.css">
+<link rel="stylesheet" href="styles/globais.css">
+
+
+<script src="styles/global.js" defer></script>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+
+<div class="wrapper">
+
+    <!-- STEP 1 -->
+
+    <section class="step active" id="step1">
+
+        <div class="hero">
+
+            <div class="hero-logo">
+                <img src="LogoSemFundo.png" alt="Maestrion">
+            </div>
+
+            <h1 class="big-title">
+                BEM-VINDO
+            </h1>
+
+            <p class="hero-sub">
+                Todo grande talento precisa de uma grande regência.
+            </p>
+
+            <button class="btn" onclick="nextStep()">
+                Começar →
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- STEP 2 -->
+
+    <section class="step" id="step2">
+
+        <div class="card">
+
+            <h2 class="title">
+                Escolha o tema
+            </h2>
+
+            <p class="subtitle">
+                Personalize a aparência da sua experiência.
+            </p>
+
+            <div class="theme-grid">
+
+                <div class="theme-card active" data-theme="neon">
+                    <div class="theme-preview neon"></div>
+                    <span>Neon</span>
+                </div>
+
+                <div class="theme-card" data-theme="ocean">
+                    <div class="theme-preview ocean"></div>
+                    <span>Ocean</span>
+                </div>
+
+                <div class="theme-card" data-theme="sunset">
+                    <div class="theme-preview sunset"></div>
+                    <span>Sunset</span>
+                </div>
+
+            </div>
+
+            <button class="btn" onclick="nextStep()">
+                Continuar →
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- STEP 3 -->
+
+    <section class="step" id="step3">
+
+        <div class="card">
+
+            <h2 class="title">
+                Personalize sua experiência
+            </h2>
+
+            <p class="subtitle">
+                Escolha recursos de acessibilidade.
+            </p>
+
+            <div class="access-list">
+
+          <div class="access" data-access="high-contrast">
+    <span>Alto Contraste</span>
+    <div class="toggle"></div>
+</div>
+
+<div class="access" data-access="large-text">
+    <span>Texto Ampliado</span>
+    <div class="toggle"></div>
+</div>
+
+<div class="access" data-access="screen-reader">
+    <span>Leitor de Tela</span>
+    <div class="toggle"></div>
+</div>
+<div class="access" data-access="audio-reader">
+    <span>Leitura por Áudio</span>
+    <div class="toggle"></div>
+</div>
+            </div>
+
+            <button class="btn" onclick="nextStep()">
+                Continuar →
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- STEP 4 -->
+
+    <section class="step" id="step4">
+
+        <div class="card">
+
+            <h2 class="title">
+                O que é a Maestrion?
+            </h2>
+
+            <p class="subtitle">
+                Uma plataforma que conecta músicos, estudantes,
+                maestros, bandas e contratantes.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="icon">🎓</div>
+                    <h3>Estudantes</h3>
+                </div>
+
+                <div class="feature">
+                    <div class="icon">🎼</div>
+                    <h3>Maestros</h3>
+                </div>
+
+                <div class="feature">
+                    <div class="icon">🎤</div>
+                    <h3>Bandas</h3>
+                </div>
+
+                <div class="feature">
+                    <div class="icon">🤝</div>
+                    <h3>Contratantes</h3>
+                </div>
+
+            </div>
+
+            <button class="btn" onclick="startLoading()">
+                Entrar na plataforma →
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- STEP 5 -->
+
+    <section class="step" id="step5">
+
+        <div class="loading-wrap">
+
+            <h2 class="loading-title">
+                Preparando sua experiência...
+            </h2>
+
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+
+            <p class="loading-text" id="loadingText">
+                Aplicando preferências...
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+
+/* ==========================================
+   CONTROLE DE STEPS
+========================================== */
+
+let currentStep = 1;
+
+function nextStep(){
+
+    document
+        .getElementById(`step${currentStep}`)
+        .classList.remove("active");
+
+    currentStep++;
+
+    document
+        .getElementById(`step${currentStep}`)
+        .classList.add("active");
+
+}
+
+/* ==========================================
+   TOGGLES
+========================================== */
+/* ==========================================
+   ACESSIBILIDADE
+========================================== */
+
+let audioReaderHandler = null;
+let audioReaderTimeout = null;
+
+function enableAudioReader(){
+
+    if(audioReaderHandler) return;
+
+    audioReaderHandler = (e) => {
+
+        const el = e.target;
+
+        const validTags = [
+            "P",
+            "SPAN",
+            "A",
+            "BUTTON",
+            "H1",
+            "H2",
+            "H3",
+            "H4",
+            "H5",
+            "H6",
+            "LI",
+            "LABEL"
+        ];
+
+        if(!validTags.includes(el.tagName))
+            return;
+
+        const text =
+            el.innerText?.trim();
+
+        if(!text)
+            return;
+
+        clearTimeout(audioReaderTimeout);
+
+        audioReaderTimeout = setTimeout(() => {
+
+            window.speechSynthesis.cancel();
+
+            const speech =
+                new SpeechSynthesisUtterance(text);
+
+            speech.lang = "pt-BR";
+            speech.rate = 1;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(
+                speech
+            );
+
+        },500);
+
+    };
+
+    document.addEventListener(
+        "mouseover",
+        audioReaderHandler
+    );
+
+}
+
+function disableAudioReader(){
+
+    if(audioReaderHandler){
+
+        document.removeEventListener(
+            "mouseover",
+            audioReaderHandler
+        );
+
+        audioReaderHandler = null;
+
+    }
+
+    clearTimeout(audioReaderTimeout);
+
+    window.speechSynthesis.cancel();
+
+}
+
+function applyAccessibility(
+    feature,
+    enabled
+){
+
+    switch(feature){
+
+        case "large-text":
+
+            document.body.classList.toggle(
+                "large-text",
+                enabled
+            );
+
+        break;
+
+        case "high-contrast":
+
+            document.body.classList.toggle(
+                "high-contrast",
+                enabled
+            );
+
+        break;
+
+        case "screen-reader":
+
+            if(
+                enabled &&
+                !document.querySelector(
+                    "#vlibras-script"
+                )
+            ){
+
+                const script =
+                    document.createElement(
+                        "script"
+                    );
+
+                script.id =
+                    "vlibras-script";
+
+                script.src =
+                    "https://vlibras.gov.br/app/vlibras-plugin.js";
+
+                script.onload = () => {
+
+                    new window.VLibras.Widget(
+                        "https://vlibras.gov.br/app"
+                    );
+
+                };
+
+                document.body.appendChild(
+                    script
+                );
+
+            }
+
+        break;
+
+        case "audio-reader":
+
+            if(enabled){
+
+                enableAudioReader();
+
+            }else{
+
+                disableAudioReader();
+
+            }
+
+        break;
+
+    }
+
+}
+
+/* ==========================================
+   TOGGLES DE ACESSIBILIDADE
+========================================== */
+
+const accessItems =
+    document.querySelectorAll(".access");
+
+if(accessItems.length){
+
+    accessItems.forEach(item => {
+
+        const toggle =
+            item.querySelector(".toggle");
+
+        const feature =
+            item.dataset.access;
+
+        const saved =
+            localStorage.getItem(
+                `maestrion-${feature}`
+            );
+
+        if(saved === "true"){
+
+            toggle.classList.add("active");
+
+            applyAccessibility(
+                feature,
+                true
+            );
+
+        }
+
+        toggle.addEventListener("click", () => {
+
+            toggle.classList.toggle("active");
+
+            const enabled =
+                toggle.classList.contains(
+                    "active"
+                );
+
+            localStorage.setItem(
+                `maestrion-${feature}`,
+                enabled
+            );
+
+            applyAccessibility(
+                feature,
+                enabled
+            );
+
+        });
+
+    });
+
+}
+
+/* ==========================================
+   CARREGAR ACESSIBILIDADE
+   PARA TODAS AS PÁGINAS
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        applyAccessibility(
+            "high-contrast",
+            localStorage.getItem(
+                "maestrion-high-contrast"
+            ) === "true"
+        );
+
+        applyAccessibility(
+            "large-text",
+            localStorage.getItem(
+                "maestrion-large-text"
+            ) === "true"
+        );
+
+        applyAccessibility(
+            "screen-reader",
+            localStorage.getItem(
+                "maestrion-screen-reader"
+            ) === "true"
+        );
+
+        applyAccessibility(
+            "audio-reader",
+            localStorage.getItem(
+                "maestrion-audio-reader"
+            ) === "true"
+        );
+
+    }
+);
+/* ==========================================
+   THEME SYSTEM
+========================================== */
+
+const themes = {
+    neon: {
+        purple:"#8B5CF6",
+        cyan:"#06B6D4",
+        green:"#10B981",
+        bg:"#070B14",
+        card:"#0D1220",
+        white:"#F8FAFC",
+        muted:"#94A3B8",
+        border:"rgba(255,255,255,.08)"
+    },
+
+    ocean: {
+        purple:"#00C6FF",
+        cyan:"#0072FF",
+        green:"#22C55E",
+        bg:"#06131f",
+        card:"#0b1d2a",
+        white:"#F8FAFC",
+        muted:"#93C5FD",
+        border:"rgba(255,255,255,.10)"
+    },
+
+    sunset: {
+        purple:"#FF512F",
+        cyan:"#DD2476",
+        green:"#F97316",
+        bg:"#14080b",
+        card:"#1a0c12",
+        white:"#F8FAFC",
+        muted:"#F9A8D4",
+        border:"rgba(255,255,255,.10)"
+    }
+};
+
+function applyTheme(themeName){
+
+    const theme = themes[themeName];
+    if(!theme) return;
+
+    const root = document.documentElement;
+
+    root.style.setProperty("--purple", theme.purple);
+    root.style.setProperty("--cyan", theme.cyan);
+    root.style.setProperty("--green", theme.green);
+    root.style.setProperty("--bg", theme.bg);
+    root.style.setProperty("--card", theme.card);
+    root.style.setProperty("--white", theme.white);
+    root.style.setProperty("--muted", theme.muted);
+    root.style.setProperty("--border", theme.border);
+
+    localStorage.setItem("maestrion-theme", themeName);
+}
+document.addEventListener("DOMContentLoaded", () => {
+
+    const saved =
+        localStorage.getItem("maestrion-theme") || "neon";
+
+    applyTheme(saved);
+
+});
+/* ==========================================
+   TEMAS
+========================================== */
+
+const themeCards =
+document.querySelectorAll(".theme-card");
+
+themeCards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        themeCards.forEach(c => {
+
+            c.classList.remove("active");
+
+        });
+
+        card.classList.add("active");
+
+        const theme =
+        card.dataset.theme;
+
+        applyTheme(theme);
+
+    });
+
+});
+
+/* ==========================================
+   CARREGAR TEMA SALVO
+========================================== */
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const savedTheme =
+        localStorage.getItem("maestrion-theme")
+        || "neon";
+
+    themeCards.forEach(card => {
+
+        card.classList.remove("active");
+
+        if(card.dataset.theme === savedTheme){
+
+            card.classList.add("active");
+
+        }
+
+    });
+
+});
+
+/* ==========================================
+   LOADING
+========================================== */
+
+function startLoading(){
+
+    document
+        .getElementById("step4")
+        .classList.remove("active");
+
+    document
+        .getElementById("step5")
+        .classList.add("active");
+
+    const loadingText =
+    document.getElementById("loadingText");
+
+    setTimeout(() => {
+
+        loadingText.innerText =
+        "Carregando recursos...";
+
+    },1000);
+
+    setTimeout(() => {
+
+        loadingText.innerText =
+        "Preparando ambiente...";
+
+    },2200);
+
+    setTimeout(() => {
+
+        loadingText.innerText =
+        "Finalizando experiência...";
+
+    },3400);
+
+    setTimeout(() => {
+
+        localStorage.setItem(
+            "maestrion-onboarding",
+            "done"
+        );
+
+        window.location.href =
+        "home.html";
+
+    },4500);
+
+}
+
+</script>
+
+</body>
+</html>

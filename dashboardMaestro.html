@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Maestrion — Dashboard Maestro</title>
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+body{
+background:#040816;
+color:white;
+overflow-x:hidden;
+}
+
+/* =========================
+BACKGROUND
+========================= */
+
+.bg1{
+position:fixed;
+top:-200px;
+left:-200px;
+width:600px;
+height:600px;
+background:#ff2ea6;
+opacity:.12;
+filter:blur(180px);
+z-index:-1;
+}
+
+.bg2{
+position:fixed;
+bottom:-200px;
+right:-200px;
+width:600px;
+height:600px;
+background:#00e5ff;
+opacity:.12;
+filter:blur(180px);
+z-index:-1;
+}
+
+/* =========================
+LAYOUT
+========================= */
+
+.app{
+display:flex;
+min-height:100vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+width:290px;
+background:#070b1f;
+border-right:1px solid rgba(255,255,255,.06);
+padding:30px 22px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+position:fixed;
+height:100vh;
+top:0;
+left:0;
+}
+
+/* LOGO */
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:40px;
+}
+
+.logo-box{
+width:54px;
+height:54px;
+border-radius:16px;
+background:
+linear-gradient(135deg,#ff2ea6,#00e5ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:800;
+box-shadow:
+0 0 25px rgba(255,46,166,.35);
+}
+
+.logo h1{
+font-size:22px;
+font-weight:800;
+letter-spacing:2px;
+}
+
+/* MENU */
+
+.menu-title{
+font-size:12px;
+color:#7d859d;
+margin-bottom:14px;
+letter-spacing:1px;
+text-transform:uppercase;
+margin-top:25px;
+}
+
+nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+nav a{
+display:flex;
+align-items:center;
+gap:12px;
+padding:16px;
+border-radius:16px;
+color:#b8bdd4;
+text-decoration:none;
+font-size:15px;
+font-weight:700;
+transition:.25s;
+}
+
+nav a:hover{
+background:#ffffff10;
+color:white;
+}
+
+nav .active{
+background:
+linear-gradient(135deg,
+rgba(255,46,166,.25),
+rgba(0,229,255,.15));
+border:1px solid rgba(255,255,255,.08);
+color:white;
+box-shadow:
+0 0 25px rgba(255,46,166,.15);
+}
+
+/* LEVEL */
+
+.level-card{
+margin-top:25px;
+background:#0b1024;
+border:1px solid rgba(255,255,255,.06);
+padding:20px;
+border-radius:22px;
+}
+
+.level-top{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:14px;
+}
+
+.level-avatar{
+width:60px;
+height:60px;
+border-radius:18px;
+background:
+linear-gradient(135deg,#ff2ea6,#00e5ff);
+}
+
+.level-card h3{
+font-size:28px;
+font-weight:800;
+}
+
+.level-card p{
+font-size:14px;
+color:#9ba4bf;
+}
+
+.progress{
+height:10px;
+border-radius:999px;
+background:#ffffff10;
+margin-top:14px;
+overflow:hidden;
+}
+
+.progress span{
+display:block;
+height:100%;
+width:72%;
+background:
+linear-gradient(90deg,#ff2ea6,#00e5ff);
+border-radius:999px;
+}
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+margin-left:290px;
+padding:28px;
+width:calc(100% - 290px);
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.topbar h1{
+font-size:38px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.topbar p{
+color:#9ba4bf;
+font-size:16px;
+}
+
+.top-actions{
+display:flex;
+gap:14px;
+align-items:center;
+}
+
+.badge{
+padding:14px 18px;
+background:#ffffff10;
+border-radius:14px;
+font-weight:700;
+border:1px solid rgba(255,255,255,.05);
+}
+
+/* =========================
+GRID
+========================= */
+
+.grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:22px;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.card{
+background:#0a1020;
+border:1px solid rgba(255,255,255,.06);
+padding:26px;
+border-radius:26px;
+backdrop-filter:blur(18px);
+box-shadow:
+0 10px 40px rgba(0,0,0,.2);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:10px;
+font-weight:800;
+}
+
+.card p{
+color:#9ba4bf;
+}
+
+/* =========================
+PARTITURAS
+========================= */
+
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:18px 0 24px;
+}
+
+.filter{
+padding:10px 16px;
+border-radius:999px;
+background:#ffffff10;
+font-size:14px;
+font-weight:700;
+}
+
+.file{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+border-radius:18px;
+background:#ffffff08;
+margin-bottom:14px;
+transition:.25s;
+}
+
+.file:hover{
+background:#ffffff12;
+transform:translateY(-2px);
+}
+
+.file-info{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.file-icon{
+width:52px;
+height:52px;
+border-radius:16px;
+background:
+linear-gradient(135deg,#ff2ea6,#00e5ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+}
+
+.file strong{
+font-size:16px;
+}
+
+.file span{
+font-size:13px;
+color:#9ba4bf;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:14px;
+background:
+linear-gradient(90deg,#ff2ea6,#00e5ff);
+color:white;
+font-weight:800;
+cursor:pointer;
+transition:.25s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:
+0 0 25px rgba(255,46,166,.25);
+}
+
+/* =========================
+AI BOX
+========================= */
+
+.ai-box{
+background:
+linear-gradient(135deg,
+rgba(255,46,166,.12),
+rgba(0,229,255,.08));
+border:1px solid rgba(255,255,255,.08);
+position:relative;
+overflow:hidden;
+}
+
+.ai-glow{
+position:absolute;
+top:-50px;
+right:-50px;
+width:180px;
+height:180px;
+background:#ff2ea6;
+filter:blur(100px);
+opacity:.2;
+}
+
+/* =========================
+ANALISE
+========================= */
+
+.metric{
+margin-top:18px;
+}
+
+.metric-top{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
+
+.bar{
+height:10px;
+border-radius:999px;
+background:#ffffff10;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+border-radius:999px;
+background:
+linear-gradient(90deg,#00e5ff,#ff2ea6);
+}
+
+/* =========================
+AGENDA
+========================= */
+
+.schedule{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.event{
+display:flex;
+justify-content:space-between;
+padding:16px;
+background:#ffffff08;
+border-radius:18px;
+}
+
+.event strong{
+display:block;
+margin-bottom:4px;
+}
+
+/* =========================
+RELATORIOS
+========================= */
+
+.report{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+border-radius:18px;
+background:#ffffff08;
+margin-top:14px;
+}
+
+/* =========================
+TIMELINE
+========================= */
+
+.timeline{
+margin-top:20px;
+display:flex;
+justify-content:space-between;
+position:relative;
+}
+
+.timeline::before{
+content:'';
+position:absolute;
+top:26px;
+left:0;
+width:100%;
+height:4px;
+background:#ffffff10;
+}
+
+.step{
+position:relative;
+z-index:2;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+.circle{
+width:56px;
+height:56px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#111827;
+border:3px solid #ff2ea6;
+box-shadow:
+0 0 25px rgba(255,46,166,.35);
+font-weight:800;
+}
+
+.circle.active{
+background:
+linear-gradient(135deg,#ff2ea6,#00e5ff);
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.topbar{
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg1"></div>
+<div class="bg2"></div>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+<div class="logo-box">♫</div>
+<h1>MAESTRION</h1>
+</div>
+
+<div class="menu-title">Painel</div>
+
+<nav>
+<a class="active">🎼 Maestro</a>
+<a>📂 Partituras</a>
+<a>🎶 Arranjos</a>
+<a>🧠 IA Musical</a>
+<a>📊 Relatórios</a>
+<a>📅 Planejamento</a>
+</nav>
+
+<div class="menu-title">Organização</div>
+
+<nav>
+<a>🎻 Instrumentos</a>
+<a>👥 Membros</a>
+<a>🏛️ Orquestra</a>
+<a>🎤 Coral</a>
+</nav>
+
+<div class="menu-title">Extras</div>
+
+<nav>
+<a>⭐ Premium</a>
+<a>📡 Comunidade</a>
+<a>⚙️ Configurações</a>
+</nav>
+
+</div>
+
+<div class="level-card">
+
+<div class="level-top">
+<div class="level-avatar"></div>
+
+<div>
+<h3>Nível 28</h3>
+<p>Maestro Experiente</p>
+</div>
+</div>
+
+<div class="progress">
+<span></span>
+</div>
+
+<p style="margin-top:10px">
+12.500 / 15.000 XP
+</p>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+
+<div>
+<h1>Painel do Maestro 🎼</h1>
+<p>
+Gerencie partituras, ensaios, arranjos e análises musicais em um único lugar.
+</p>
+</div>
+
+<div class="top-actions">
+
+<div class="badge">
+🎵 128 arquivos
+</div>
+
+<div class="badge">
+⭐ Superstar
+</div>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<!-- LEFT -->
+<div>
+
+<!-- PARTITURAS -->
+<div class="card">
+
+<h2>Banco de Partituras</h2>
+
+<p>
+Organize e acesse suas composições e arranjos rapidamente.
+</p>
+
+<div class="filters">
+
+<div class="filter">Clássico</div>
+<div class="filter">Gospel</div>
+<div class="filter">Orquestra</div>
+<div class="filter">Coral</div>
+<div class="filter">Jazz</div>
+
+</div>
+
+<div class="file">
+
+<div class="file-info">
+<div class="file-icon">🎼</div>
+
+<div>
+<strong>Sinfonia Nº5</strong>
+<span>Partitura Completa • PDF</span>
+</div>
+</div>
+
+<button>Abrir</button>
+
+</div>
+
+<div class="file">
+
+<div class="file-info">
+<div class="file-icon">🎶</div>
+
+<div>
+<strong>Arranjo Worship</strong>
+<span>Ensaio Domingo • Atualizado</span>
+</div>
+</div>
+
+<button>Abrir</button>
+
+</div>
+
+<div class="file">
+
+<div class="file-info">
+<div class="file-icon">🎻</div>
+
+<div>
+<strong>Quarteto de Cordas</strong>
+<span>Versão Orquestral</span>
+</div>
+</div>
+
+<button>Abrir</button>
+
+</div>
+
+</div>
+
+<!-- ANALISE -->
+<div class="card" style="margin-top:22px">
+
+<h2>Análise Musical</h2>
+
+<p>
+Indicadores avançados da composição atual.
+</p>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Complexidade Harmônica</span>
+<span>75%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:75%"></div>
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Ritmo e Tempo</span>
+<span>60%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:60%"></div>
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Dinâmica Musical</span>
+<span>82%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:82%"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- TIMELINE -->
+<div class="card" style="margin-top:22px">
+
+<h2>Preparação da Apresentação</h2>
+
+<p>
+Acompanhe a evolução do grupo até a apresentação final.
+</p>
+
+<div class="timeline">
+
+<div class="step">
+<div class="circle active">1</div>
+<span>Escolha</span>
+</div>
+
+<div class="step">
+<div class="circle active">2</div>
+<span>Ensaios</span>
+</div>
+
+<div class="step">
+<div class="circle">3</div>
+<span>Ajustes</span>
+</div>
+
+<div class="step">
+<div class="circle">4</div>
+<span>Apresentação</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- PLANEJAMENTO -->
+<div class="card" style="margin-top:22px">
+
+<h2>Planejamento</h2>
+
+<p>
+Gerencie ensaios e apresentações futuras.
+</p>
+
+<div class="schedule">
+
+<div class="event">
+<div>
+<strong>Ensaio Geral</strong>
+<span>Sexta • 19:00</span>
+</div>
+
+<button>Editar</button>
+</div>
+
+<div class="event">
+<div>
+<strong>Apresentação Principal</strong>
+<span>Domingo • 18:30</span>
+</div>
+
+<button>Detalhes</button>
+</div>
+
+<div class="event">
+<div>
+<strong>Reunião Musical</strong>
+<span>Quarta • 20:00</span>
+</div>
+
+<button>Entrar</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div>
+
+<!-- IA -->
+<div class="card ai-box">
+
+<div class="ai-glow"></div>
+
+<h2>Assistente IA Musical</h2>
+
+<p>
+Sugestão atual:
+Adicionar harmonias em 7ª e criar modulação suave no refrão.
+</p>
+
+<button style="margin-top:18px">
+Gerar nova ideia
+</button>
+
+</div>
+
+<!-- RELATORIOS -->
+<div class="card" style="margin-top:22px">
+
+<h2>Relatórios Premium</h2>
+
+<p>
+Desempenho detalhado do grupo musical.
+</p>
+
+<div class="report">
+<span>Performance Vocal</span>
+<strong>92%</strong>
+</div>
+
+<div class="report">
+<span>Sincronia Instrumental</span>
+<strong>88%</strong>
+</div>
+
+<div class="report">
+<span>Precisão Rítmica</span>
+<strong>81%</strong>
+</div>
+
+<button style="margin-top:18px;width:100%">
+Exportar relatório
+</button>
+
+</div>
+
+<!-- STATS -->
+<div class="card" style="margin-top:22px">
+
+<h2>Estatísticas</h2>
+
+<div class="report">
+<span>Ensaios realizados</span>
+<strong>48</strong>
+</div>
+
+<div class="report">
+<span>Partituras criadas</span>
+<strong>128</strong>
+</div>
+
+<div class="report">
+<span>Membros ativos</span>
+<strong>34</strong>
+</div>
+
+<div class="report">
+<span>Eventos concluídos</span>
+<strong>16</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+</body>
+</html>

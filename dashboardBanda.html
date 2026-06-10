@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Maestrin — DashBoard Banda</title>
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+body{
+background:#040816;
+color:white;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.bg1,.bg2{
+position:fixed;
+border-radius:50%;
+filter:blur(180px);
+z-index:-1;
+}
+
+.bg1{
+width:500px;
+height:500px;
+background:#2563eb;
+top:-200px;
+left:-200px;
+opacity:.15;
+}
+
+.bg2{
+width:500px;
+height:500px;
+background:#00d4ff;
+bottom:-200px;
+right:-200px;
+opacity:.15;
+}
+
+/* APP */
+
+.app{
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:290px;
+background:#07101f;
+border-right:1px solid rgba(255,255,255,.06);
+padding:28px 22px;
+position:fixed;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:40px;
+}
+
+.logo-box{
+width:56px;
+height:56px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d4ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:800;
+}
+
+.logo h1{
+font-size:22px;
+font-weight:800;
+}
+
+.menu-title{
+font-size:12px;
+color:#7f8aa5;
+margin:25px 0 14px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+nav a{
+padding:16px;
+border-radius:16px;
+background:#ffffff08;
+text-decoration:none;
+color:#c8d0e9;
+font-weight:700;
+transition:.25s;
+}
+
+nav a:hover{
+background:#ffffff12;
+}
+
+nav .active{
+background:linear-gradient(135deg,#2563eb,#00d4ff);
+color:white;
+}
+
+/* LEVEL */
+
+.level-card{
+background:#0d172d;
+padding:22px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.progress{
+height:10px;
+border-radius:999px;
+background:#ffffff10;
+overflow:hidden;
+margin-top:12px;
+}
+
+.progress span{
+display:block;
+height:100%;
+width:78%;
+background:linear-gradient(90deg,#2563eb,#00d4ff);
+}
+
+/* MAIN */
+
+.main{
+margin-left:290px;
+padding:30px;
+width:100%;
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.topbar h1{
+font-size:40px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.topbar p{
+color:#9ba4bf;
+}
+
+.top-actions{
+display:flex;
+gap:14px;
+}
+
+.badge{
+padding:14px 18px;
+background:#ffffff10;
+border-radius:14px;
+font-weight:700;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:22px;
+}
+
+/* CARD */
+
+.card{
+background:#0a1020;
+padding:26px;
+border-radius:28px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.card p{
+color:#9ba4bf;
+}
+
+/* MUSIC */
+
+.music{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+border-radius:18px;
+background:#ffffff08;
+margin-top:14px;
+}
+
+.music-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.music-icon{
+width:55px;
+height:55px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d4ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+}
+
+/* BUTTON */
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#2563eb,#00d4ff);
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+/* METRIC */
+
+.metric{
+margin-top:20px;
+}
+
+.metric-top{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
+
+.bar{
+height:10px;
+border-radius:999px;
+background:#ffffff10;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:linear-gradient(90deg,#2563eb,#00d4ff);
+}
+
+/* SOCIAL */
+
+.social{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:18px;
+}
+
+.social-box{
+background:#ffffff08;
+padding:22px;
+border-radius:18px;
+text-align:center;
+}
+
+.social-box h3{
+font-size:34px;
+margin-bottom:6px;
+}
+
+/* TIMELINE */
+
+.timeline{
+display:flex;
+justify-content:space-between;
+position:relative;
+margin-top:25px;
+}
+
+.timeline::before{
+content:'';
+position:absolute;
+top:26px;
+width:100%;
+height:4px;
+background:#ffffff10;
+}
+
+.step{
+position:relative;
+z-index:2;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+.circle{
+width:56px;
+height:56px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#111827;
+border:3px solid #00d4ff;
+font-weight:800;
+}
+
+.circle.active{
+background:linear-gradient(135deg,#2563eb,#00d4ff);
+}
+
+/* EVENT */
+
+.event{
+display:flex;
+justify-content:space-between;
+padding:16px;
+background:#ffffff08;
+border-radius:18px;
+margin-top:14px;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:1200px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+}
+
+.social{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg1"></div>
+<div class="bg2"></div>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+<div class="logo-box">🎸</div>
+<h1>MAESTRION</h1>
+</div>
+
+<div class="menu-title">Painel</div>
+
+<nav>
+<a class="active">🎵 Banda</a>
+<a>📀 Músicas</a>
+<a>📅 Eventos</a>
+<a>📈 Analytics</a>
+<a>🌎 Divulgação</a>
+<a>💬 Comunidade</a>
+</nav>
+
+<div class="menu-title">Organização</div>
+
+<nav>
+<a>👥 Integrantes</a>
+<a>🎤 Vocalistas</a>
+<a>🥁 Instrumentos</a>
+<a>📂 Arquivos</a>
+<a>🎬 Videoclipes</a>
+</nav>
+
+</div>
+
+<div class="level-card">
+
+<h2>Nível Profissional</h2>
+
+<div class="progress">
+<span></span>
+</div>
+
+<p style="margin-top:12px;color:#9ba4bf">
+18.250 seguidores alcançados
+</p>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<div class="topbar">
+
+<div>
+<h1>Painel da Banda 🎸</h1>
+<p>
+Gerencie músicas, eventos, crescimento e divulgação da sua banda.
+</p>
+</div>
+
+<div class="top-actions">
+
+<div class="badge">
+🎵 42 músicas
+</div>
+
+<div class="badge">
+🌎 18k seguidores
+</div>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<!-- LEFT -->
+<div>
+
+<!-- MUSICAS -->
+<div class="card">
+
+<h2>Lançamentos Recentes</h2>
+
+<div class="music">
+
+<div class="music-left">
+
+<div class="music-icon">🎵</div>
+
+<div>
+<h3>Além das Ondas</h3>
+<p>Publicado há 2 dias</p>
+</div>
+
+</div>
+
+<button>Editar</button>
+
+</div>
+
+<div class="music">
+
+<div class="music-left">
+
+<div class="music-icon">🎤</div>
+
+<div>
+<h3>Fogo do Céu</h3>
+<p>Publicado há 1 semana</p>
+</div>
+
+</div>
+
+<button>Analytics</button>
+
+</div>
+
+</div>
+
+<!-- ANALYTICS -->
+<div class="card" style="margin-top:22px">
+
+<h2>Analytics da Banda</h2>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Engajamento</span>
+<span>88%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:88%"></div>
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Retenção</span>
+<span>91%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:91%"></div>
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-top">
+<span>Alcance</span>
+<span>74%</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:74%"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- TIMELINE -->
+<div class="card" style="margin-top:22px">
+
+<h2>Produção do Álbum</h2>
+
+<div class="timeline">
+
+<div class="step">
+<div class="circle active">1</div>
+<span>Composição</span>
+</div>
+
+<div class="step">
+<div class="circle active">2</div>
+<span>Gravação</span>
+</div>
+
+<div class="step">
+<div class="circle">3</div>
+<span>Mixagem</span>
+</div>
+
+<div class="step">
+<div class="circle">4</div>
+<span>Lançamento</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- EVENTOS -->
+<div class="card" style="margin-top:22px">
+
+<h2>Shows e Eventos</h2>
+
+<div class="event">
+<div>
+<h3>Festival Worship</h3>
+<p>Sexta • 21h</p>
+</div>
+<button>Entrar</button>
+</div>
+
+<div class="event">
+<div>
+<h3>Conferência Jovem</h3>
+<p>Domingo • 19h</p>
+</div>
+<button>Detalhes</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div>
+
+<div class="card">
+
+<h2>Redes Sociais</h2>
+
+<div class="social">
+
+<div class="social-box">
+<h3>18k</h3>
+<p>Instagram</p>
+</div>
+
+<div class="social-box">
+<h3>9k</h3>
+<p>YouTube</p>
+</div>
+
+<div class="social-box">
+<h3>12k</h3>
+<p>TikTok</p>
+</div>
+
+<div class="social-box">
+<h3>5k</h3>
+<p>Spotify</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card" style="margin-top:22px">
+
+<h2>IA Musical</h2>
+
+<p>
+Sugestão:
+Adicionar refrão mais impactante e reforçar vocal principal.
+</p>
+
+<button style="margin-top:18px;width:100%">
+Gerar Ideias
+</button>
+
+</div>
+
+<div class="card" style="margin-top:22px">
+
+<h2>Oportunidades</h2>
+
+<div class="event">
+<div>
+<h3>Parceria Musical</h3>
+<p>Produtor Independente</p>
+</div>
+<button>Ver</button>
+</div>
+
+<div class="event">
+<div>
+<h3>Convite para Evento</h3>
+<p>São Paulo • Worship Night</p>
+</div>
+<button>Aceitar</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+</body>
+</html>

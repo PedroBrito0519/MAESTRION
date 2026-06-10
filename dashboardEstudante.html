@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Maestrion - Dashboard Estudante</title>
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+}
+
+/* =========================
+BACKGROUND
+========================= */
+
+.bg-glow-1{
+position:fixed;
+top:-200px;
+left:-200px;
+width:600px;
+height:600px;
+background:#6d28d9;
+filter:blur(180px);
+opacity:.18;
+z-index:-1;
+}
+
+.bg-glow-2{
+position:fixed;
+bottom:-250px;
+right:-200px;
+width:600px;
+height:600px;
+background:#0891b2;
+filter:blur(180px);
+opacity:.12;
+z-index:-1;
+}
+
+/* =========================
+LAYOUT
+========================= */
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+width:280px;
+background:rgba(5,8,22,.95);
+border-right:1px solid rgba(255,255,255,.06);
+padding:30px 22px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+position:fixed;
+height:100vh;
+left:0;
+top:0;
+backdrop-filter:blur(20px);
+}
+
+/* LOGO */
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:40px;
+}
+
+.logo-circle{
+width:48px;
+height:48px;
+border-radius:50%;
+background:
+linear-gradient(135deg,#8b5cf6,#06b6d4);
+box-shadow:
+0 0 25px rgba(139,92,246,.5);
+}
+
+.logo h1{
+font-size:18px;
+font-weight:600;
+letter-spacing:2px;
+}
+
+/* MENU */
+
+.menu-section{
+margin-bottom:30px;
+}
+
+.menu-title{
+font-size:12px;
+color:#6b7280;
+margin-bottom:18px;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.menu a{
+display:flex;
+align-items:center;
+gap:14px;
+padding:14px 16px;
+border-radius:14px;
+text-decoration:none;
+color:#d1d5db;
+transition:.25s;
+font-size:15px;
+}
+
+.menu a:hover{
+background:rgba(139,92,246,.12);
+color:white;
+}
+
+.menu .active{
+background:
+linear-gradient(135deg,
+rgba(124,58,237,.35),
+rgba(59,130,246,.18));
+border:1px solid rgba(139,92,246,.35);
+box-shadow:0 0 18px rgba(139,92,246,.25);
+}
+
+/* LEVEL CARD */
+
+.level-card{
+margin-top:20px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:20px;
+}
+
+.level-header{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:14px;
+}
+
+.level-avatar{
+width:56px;
+height:56px;
+border-radius:50%;
+background:
+linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+
+.level-card h3{
+font-size:24px;
+margin-bottom:4px;
+}
+
+.level-card p{
+font-size:14px;
+color:#9ca3af;
+}
+
+.progress{
+margin-top:16px;
+height:8px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+overflow:hidden;
+}
+
+.progress span{
+display:block;
+height:100%;
+width:78%;
+background:
+linear-gradient(90deg,#7c3aed,#06b6d4);
+border-radius:999px;
+}
+
+.progress-text{
+margin-top:10px;
+font-size:13px;
+color:#9ca3af;
+text-align:center;
+}
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+margin-left:280px;
+padding:28px;
+width:calc(100% - 280px);
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:24px;
+}
+
+.topbar h2{
+font-size:42px;
+margin-bottom:8px;
+}
+
+.topbar p{
+color:#9ca3af;
+font-size:17px;
+}
+
+.top-right{
+display:flex;
+align-items:center;
+gap:26px;
+}
+
+.stat{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.stat-number{
+font-size:28px;
+font-weight:700;
+}
+
+.avatar{
+width:52px;
+height:52px;
+border-radius:50%;
+background:
+linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+
+/* =========================
+GRID
+========================= */
+
+.grid{
+display:grid;
+grid-template-columns:2fr 1.1fr;
+gap:22px;
+}
+
+/* CARDS */
+
+.card{
+background:rgba(255,255,255,.025);
+border:1px solid rgba(255,255,255,.05);
+border-radius:28px;
+padding:24px;
+backdrop-filter:blur(20px);
+box-shadow:
+0 0 0 1px rgba(255,255,255,.01),
+0 10px 40px rgba(0,0,0,.25);
+}
+
+/* WALK */
+
+.walk-map{
+height:260px;
+margin:20px 0;
+border-radius:24px;
+position:relative;
+overflow:hidden;
+background:
+radial-gradient(circle at center,
+rgba(139,92,246,.14),
+transparent 60%);
+}
+
+.path{
+position:absolute;
+top:50%;
+left:60px;
+right:60px;
+height:4px;
+background:
+linear-gradient(90deg,
+#22d3ee,
+#8b5cf6,
+#22d3ee);
+border-radius:999px;
+transform:translateY(-50%);
+box-shadow:
+0 0 22px rgba(139,92,246,.8);
+}
+
+.node{
+position:absolute;
+top:50%;
+transform:translate(-50%,-50%);
+width:62px;
+height:62px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+background:#111827;
+border:3px solid #8b5cf6;
+box-shadow:
+0 0 24px rgba(139,92,246,.7);
+}
+
+.node:nth-child(2){left:12%;}
+.node:nth-child(3){left:38%;}
+.node:nth-child(4){left:64%;}
+.node:nth-child(5){left:88%;}
+
+.node.active{
+background:
+linear-gradient(135deg,#8b5cf6,#06b6d4);
+}
+
+/* BUTTON */
+
+.btn{
+margin-top:10px;
+background:
+linear-gradient(135deg,#7c3aed,#2563eb);
+border:none;
+color:white;
+padding:14px 24px;
+border-radius:16px;
+font-size:15px;
+cursor:pointer;
+font-weight:600;
+box-shadow:
+0 0 20px rgba(124,58,237,.35);
+}
+
+/* DAILY */
+
+.daily-item{
+background:rgba(255,255,255,.025);
+border:1px solid rgba(255,255,255,.04);
+border-radius:18px;
+padding:16px;
+margin-top:14px;
+}
+
+.bar{
+margin-top:10px;
+height:7px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+overflow:hidden;
+}
+
+.bar span{
+display:block;
+height:100%;
+background:
+linear-gradient(90deg,#8b5cf6,#06b6d4);
+}
+
+/* EXERCISES */
+
+.exercise-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:18px;
+}
+
+.exercise-card{
+background:rgba(255,255,255,.025);
+border:1px solid rgba(255,255,255,.05);
+padding:22px;
+border-radius:22px;
+transition:.3s;
+}
+
+.exercise-card:hover{
+transform:translateY(-6px);
+box-shadow:
+0 0 28px rgba(139,92,246,.28);
+}
+
+.exercise-icon{
+font-size:42px;
+margin-bottom:16px;
+}
+
+/* MISSIONS */
+
+.mission{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 0;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+/* COURSES */
+
+.courses{
+margin-top:22px;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:18px;
+}
+
+.course{
+background:rgba(255,255,255,.025);
+border:1px solid rgba(255,255,255,.05);
+padding:20px;
+border-radius:22px;
+}
+
+.course-icon{
+font-size:38px;
+margin-bottom:14px;
+}
+
+.course-bar{
+margin-top:12px;
+height:7px;
+background:rgba(255,255,255,.08);
+border-radius:999px;
+overflow:hidden;
+}
+
+.course-bar span{
+display:block;
+height:100%;
+background:
+linear-gradient(90deg,#7c3aed,#06b6d4);
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.courses{
+grid-template-columns:repeat(2,1fr);
+}
+
+.exercise-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+width:100%;
+}
+
+.topbar{
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+}
+
+.courses{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+<div>
+
+<div class="logo">
+<div class="logo-circle"></div>
+<h1>MAESTRION</h1>
+</div>
+
+<div class="menu-section">
+<div class="menu">
+<a class="active">🏠 Dashboard</a>
+</div>
+</div>
+
+<div class="menu-section">
+<div class="menu-title">Aprendizado</div>
+
+<div class="menu">
+<a>🎵 Caminhada</a>
+<a>📘 Exercícios</a>
+<a>🎼 Teoria</a>
+<a>🎧 Escuta</a>
+<a>💎 Premium</a>
+</div>
+</div>
+
+<div class="menu-section">
+<div class="menu-title">Progresso</div>
+
+<div class="menu">
+<a>🎯 Missões</a>
+<a>🚩 Objetivos</a>
+<a>🎓 Cursos completos</a>
+</div>
+</div>
+
+<div class="menu-section">
+<div class="menu-title">Extras</div>
+
+<div class="menu">
+<a>⭐ Desafios</a>
+<a>👥 Comunidade</a>
+<a>📅 Eventos</a>
+</div>
+</div>
+
+</div>
+
+<div class="level-card">
+
+<div class="level-header">
+<div class="level-avatar"></div>
+
+<div>
+<h3>Nível 12</h3>
+<p>Estudante Dedicado</p>
+</div>
+</div>
+
+<div class="progress">
+<span></span>
+</div>
+
+<div class="progress-text">
+2.350 / 3.000 XP
+</div>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<div class="topbar">
+
+<div>
+<h2>Bem-vindo de volta, Jether!</h2>
+<p>Continue sua jornada e evolua na música todos os dias.</p>
+</div>
+
+<div class="top-right">
+
+<div class="stat">
+🔥
+<div>
+<div class="stat-number">12</div>
+<div>Sequência</div>
+</div>
+</div>
+
+<div class="stat">
+💎
+<div>
+<div class="stat-number">1.250</div>
+<div>Pontos</div>
+</div>
+</div>
+
+<div class="avatar"></div>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<!-- WALK -->
+<div class="card">
+
+<h2>Sua caminhada</h2>
+
+<div class="walk-map">
+
+<div class="path"></div>
+
+<div class="node active">1</div>
+<div class="node">2</div>
+<div class="node">3</div>
+<div class="node">4</div>
+
+</div>
+
+<h3>Etapa 3</h3>
+<p style="margin-top:10px;color:#9ca3af;">
+Ritmo e Pulsação
+</p>
+
+<button class="btn">
+Continuar etapa
+</button>
+
+</div>
+
+<!-- DAILY -->
+<div class="card">
+
+<h2>Diária</h2>
+
+<p style="color:#9ca3af;margin-top:10px;">
+Complete suas atividades diárias
+</p>
+
+<div class="daily-item">
+Praticar 15 minutos
+
+<div class="bar">
+<span style="width:70%"></span>
+</div>
+</div>
+
+<div class="daily-item">
+Completar exercícios
+
+<div class="bar">
+<span style="width:45%"></span>
+</div>
+</div>
+
+<div class="daily-item">
+Ouvir músicas
+
+<div class="bar">
+<span style="width:82%"></span>
+</div>
+</div>
+
+</div>
+
+<!-- EXERCISES -->
+<div class="card">
+
+<h2>Exercícios</h2>
+
+<div class="exercise-grid">
+
+<div class="exercise-card">
+<div class="exercise-icon">🎧</div>
+<h3>Escuta</h3>
+<p style="color:#9ca3af;margin-top:8px;">
+Treine percepção musical.
+</p>
+
+<button class="btn">
+Praticar
+</button>
+</div>
+
+<div class="exercise-card">
+<div class="exercise-icon">📘</div>
+<h3>Teórico</h3>
+<p style="color:#9ca3af;margin-top:8px;">
+Aprenda teoria musical.
+</p>
+
+<button class="btn">
+Praticar
+</button>
+</div>
+
+<div class="exercise-card">
+<div class="exercise-icon">💎</div>
+<h3>Premium</h3>
+<p style="color:#9ca3af;margin-top:8px;">
+Exercícios avançados.
+</p>
+
+<button class="btn">
+Acessar
+</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- MISSIONS -->
+<div class="card">
+
+<h2>Missões</h2>
+
+<div class="mission">
+<div>
+<h3>Mestre do Ritmo</h3>
+<p style="color:#9ca3af;">
+Complete 20 exercícios
+</p>
+</div>
+
+<div>12/20</div>
+</div>
+
+<div class="mission">
+<div>
+<h3>Ouvido Apurado</h3>
+<p style="color:#9ca3af;">
+Acerte exercícios de escuta
+</p>
+</div>
+
+<div>8/15</div>
+</div>
+
+<div class="mission">
+<div>
+<h3>Teórico Avançado</h3>
+<p style="color:#9ca3af;">
+Complete lições teóricas
+</p>
+</div>
+
+<div>6/10</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- COURSES -->
+<div class="card" style="margin-top:22px;">
+
+<h2>Cursos completos</h2>
+
+<div class="courses">
+
+<div class="course">
+<div class="course-icon">🎼</div>
+<h3>Fundamentos</h3>
+
+<div class="course-bar">
+<span style="width:75%"></span>
+</div>
+</div>
+
+<div class="course">
+<div class="course-icon">🥁</div>
+<h3>Ritmo</h3>
+
+<div class="course-bar">
+<span style="width:60%"></span>
+</div>
+</div>
+
+<div class="course">
+<div class="course-icon">🎹</div>
+<h3>Harmonia</h3>
+
+<div class="course-bar">
+<span style="width:40%"></span>
+</div>
+</div>
+
+<div class="course">
+<div class="course-icon">🎵</div>
+<h3>Teoria</h3>
+
+<div class="course-bar">
+<span style="width:25%"></span>
+</div>
+</div>
+
+<div class="course">
+<div class="course-icon">✍️</div>
+<h3>Composição</h3>
+
+<div class="course-bar">
+<span style="width:10%"></span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+console.log('Dashboard LIRÉVIA carregado');
+
+</script>
+
+</body>
+</html>

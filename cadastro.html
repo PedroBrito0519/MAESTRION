@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Maestrion — Cadastro</title>
+<link rel="icon" type="image/png" href="LogoIconSemFundo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!--CSS-->
+<!--CSS-->
+<link rel="stylesheet" href="styles/globais.css">
+<link rel="stylesheet" href="styles/variables.css">
+<link rel="stylesheet" href="styles/animations.css">
+<link rel="stylesheet" href="styles/especifica/cadastro.css">
+
+</head>
+<body>
+
+<div class="register-wrapper">
+<a href="home.html" class="back-home">
+    ← Voltar para Home
+</a>
+<!-- LEFT -->
+<div class="left-side">
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<div class="logo">
+<img class="logoLogin" src="LogoSemFundo.png">
+
+</div>
+
+<h1>
+Crie sua conta e <span>entre na jornada</span>
+</h1>
+
+<p>
+Faça parte da comunidade musical, conecte-se com talentos e transforme ideias em impacto real.
+</p>
+
+</div>
+
+<!-- RIGHT -->
+<div class="right-side">
+
+<div class="register-card" id="card">
+
+<h2>Cadastro</h2>
+<p>Crie sua conta para continuar</p>
+
+<form id="registerForm">
+
+<div class="form-group">
+<label>Nome completo</label>
+<input type="text" class="input" placeholder="Seu nome">
+</div>
+
+<div class="form-group">
+<label>E-mail</label>
+<input type="email" class="input" placeholder="seuemail@gmail.com">
+</div>
+
+<div class="form-group">
+<label>Senha</label>
+<input type="password" class="input" placeholder="••••••••">
+</div>
+
+<div class="form-group">
+<label>Confirmar senha</label>
+<input type="password" class="input" placeholder="••••••••">
+</div>
+
+<button class="register-btn" type="submit">
+Criar conta →
+</button>
+
+</form>
+
+<div class="bottom-text">
+Já tem conta?
+<a href="login.html">Entrar</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+  
+const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // impede o recarregamento padrão
+
+    // Aqui você pode validar os dados antes, se quiser
+
+    window.location.href = "src/pages/configInicial.html.html";
+});
+
+const rememberMe = document.getElementById("rememberMe");
+
+if(localStorage.getItem("rememberMe") === "true"){
+    rememberMe.checked = true;
+}
+
+rememberMe.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "rememberMe",
+        rememberMe.checked
+    );
+
+});
+/* glow mouse effect igual login */
+
+const card = document.getElementById('card');
+
+card.addEventListener('mousemove',(e)=>{
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.background = `
+    radial-gradient(circle at ${x}px ${y}px,
+    rgba(139,92,255,.12),
+    rgba(10,14,30,.96) 45%)
+    `;
+
+});
+
+card.addEventListener('mouseleave',()=>{
+
+    card.style.background = 'rgba(10,14,30,.92)';
+
+});
+
+</script>
+
+</body>
+</html>
+
